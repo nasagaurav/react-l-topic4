@@ -23,6 +23,9 @@ export default function App() {
   const _update = () => {
     const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users/{-N7TT_k_BbSLdHfwszx6 ?}.json`;
   };
+  const _edit = () => {};
+  const _delete = () => {};
+
   return (
     <div>
       <div>
@@ -65,8 +68,8 @@ export default function App() {
             <td>item.email</td>
             <td>item.gender</td>
             <td>
-              <button>edit</button>
-              <button>delete</button>
+              <button onClick={_edit}>edit</button>
+              <button onClick={_delete}>delete</button>
             </td>
           </tr>
         </tbody>

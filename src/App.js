@@ -1,11 +1,14 @@
 import React from "react";
-import "./style.css";
+// crud
+// create[post],read[get],update[patch/put],delete[delete]
 
 export default function App() {
   return (
     <div>
-      <h1>Hello StackBlitz!</h1>
-      <p>Start editing to see some magic happen :)</p>
+     insert form
+     update form
+     all data 
+     table
     </div>
   );
 }

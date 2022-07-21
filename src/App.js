@@ -33,16 +33,52 @@ export default function App() {
   const _insert = () => {
     // post request
     const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users.json`;
+    axios
+      .post(url, ob1)
+      .then((res) => res.data)
+      .then((d) => {
+        console.log('after insert', d);
+      })
+      .catch((e) => console.log('err insert:', e))
+      .finally(() => {
+        loadUsers();
+      });
   };
 
   const _update = () => {
-    const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users/{-N7TT_k_BbSLdHfwszx6 ?}.json`;
+    const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users/${ob2.id}.json`;
+    const data = {
+      name: ob2.name,
+      email: ob2.email,
+      gender: ob2.gender,
+    };
+    axios
+      .patch(url, data)
+      .then((res) => res.data)
+      .then((d) => {
+        console.log('after update', d);
+      })
+      .catch((e) => console.log('err update:', e))
+      .finally(() => {
+        loadUsers();
+      });
   };
   const _edit = (item) => {
     setob2(item);
   };
   const _delete = (id) => {
     console.log('deleing id', id);
+    const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users/${id}.json`;
+    axios
+      .delete(url)
+      .then((res) => res.data)
+      .then((d) => {
+        console.log('after update', d);
+      })
+      .catch((e) => console.log('err update:', e))
+      .finally(() => {
+        loadUsers();
+      });
   };
 
   const loadUsers = () => {
@@ -98,7 +134,7 @@ export default function App() {
         </thead>
         <tbody>
           {a.map((item) => (
-            <tr>
+            <tr bgColor={item.gender === 'female' ? 'red' : 'white'}>
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.email}</td>

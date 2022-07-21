@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // crud
 // create[post],read[get],update[patch/put],delete[delete]
 
 export default function App() {
+  const _nasa = (ob) => {
+    let keys = Object.keys(ob);
+    let values = Object.values(ob);
+    let temp = [];
+    for (let index in keys) {
+      temp.push({
+        id: keys[index],
+        ...values[index],
+      });
+    }
+    return temp;
+  };
+
   const [a, seta] = useState([]);
   const [ob1, setob1] = useState({ name: '', email: '', gender: '' });
   const [ob2, setob2] = useState({ id: '', name: '', email: '', gender: '' });
   const handleChange1 = (e) => {
     console.log('ob1', e.target.placeholder, e.target.value); //insert/create/ob1
+    setob1({ ...ob1, [e.target.placeholder]: e.target.value });
   };
   const handleChange2 = (e) => {
     console.log('ob2', e.target.placeholder, e.target.value); //edit/update/ob2
+    setob2({ ...ob2, [e.target.placeholder]: e.target.value });
   };
 
   const _insert = () => {
@@ -23,8 +38,28 @@ export default function App() {
   const _update = () => {
     const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users/{-N7TT_k_BbSLdHfwszx6 ?}.json`;
   };
-  const _edit = () => {};
-  const _delete = () => {};
+  const _edit = (item) => {
+    setob2(item);
+  };
+  const _delete = (id) => {
+    console.log('deleing id', id);
+  };
+
+  const loadUsers = () => {
+    const url = `https://my-project-1-22dd3-default-rtdb.firebaseio.com/users.json`;
+    axios
+      .get(url)
+      .then((res) => res.data)
+      .then((d) => _nasa(d))
+      .then((d) => {
+        console.log(d);
+        seta(d);
+      })
+      .catch((e) => console.log('err', e))
+      .finally(() => console.log('process completed: finally'));
+  };
+
+  useEffect(loadUsers, []);
 
   return (
     <div>
@@ -62,16 +97,18 @@ export default function App() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>item.id</td>
-            <td>item.name</td>
-            <td>item.email</td>
-            <td>item.gender</td>
-            <td>
-              <button onClick={_edit}>edit</button>
-              <button onClick={_delete}>delete</button>
-            </td>
-          </tr>
+          {a.map((item) => (
+            <tr>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.email}</td>
+              <td>{item.gender}</td>
+              <td>
+                <button onClick={() => _edit(item)}>edit</button>
+                <button onClick={() => _delete(item.id)}>delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

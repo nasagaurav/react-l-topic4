@@ -3,6 +3,12 @@ import axios from 'axios';
 const url = 'https://my-project-1-22dd3-default-rtdb.firebaseio.com/users.json';
 export default function App() {
   const handleClick = () => {
+    const data={
+      name:"demo1",
+      email:"demo1@gmail.com",
+      gender:"male",
+      
+    }
     axios
       .post(url, data)
       .then((res) => res.data)

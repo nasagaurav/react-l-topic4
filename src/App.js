@@ -4,10 +4,10 @@ const url = 'https://my-project-1-22dd3-default-rtdb.firebaseio.com/users.json';
 export default function App() {
   const handleClick = () => {
     const data={
-      name:"demo1",
-      email:"demo1@gmail.com",
-      gender:"male",
-      
+      name:"demo2",
+      email:"demo2@gmail.com",
+      gender:"female",
+
     }
     axios
       .post(url, data)
